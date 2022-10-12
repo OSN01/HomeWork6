@@ -30,6 +30,9 @@ namespace HomeWork6
                 else return;
             }
         }
+        /// <summary>
+        /// проверка существования файла и предложение создать новый
+        /// </summary>
         static void WorkerList()
         {
             if (File.Exists(@"D:\WorkerList.txt"))
@@ -38,15 +41,14 @@ namespace HomeWork6
                 
             } else
             {
-                Console.WriteLine("Файл не существует. Создать файл? д/н");
+                Console.WriteLine("Файл не существует. Создать новый файл? д/н");
                 char key = Console.ReadKey(true).KeyChar;
-                if (char.ToLower(key) == 'д')
-                {
-                    AddWorker();
-                }
+                if (char.ToLower(key) == 'д' || char.ToLower(key) == 'l') AddWorker();
             }
-
         }
+        /// <summary>
+        /// метод записи сотрудника в файл
+        /// </summary>
         static void AddWorker()
         {
             using (StreamWriter workerStream = new StreamWriter(@"D:\WorkerList.txt", true))
@@ -100,6 +102,9 @@ namespace HomeWork6
                 } while (char.ToLower(key) == 'д');
             }
         }
+        /// <summary>
+        /// метод чтения файла
+        /// </summary>
         static void ReadWorker()
         {
             using (StreamReader wlreader = new StreamReader(@"D:\WorkerList.txt"))
