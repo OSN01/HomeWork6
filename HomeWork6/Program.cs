@@ -13,6 +13,7 @@ namespace HomeWork6
     {
         static void Main(string[] args)
         {
+            FileFounder();
             while (true)
             {
                 Console.Clear();
@@ -21,7 +22,7 @@ namespace HomeWork6
                 char key = Console.ReadKey(true).KeyChar;
                 if (key == '1')
                 {
-                    WorkerList();
+                    ReadWorker();
                 }
                 else if (key == '2')
                 {
@@ -33,29 +34,29 @@ namespace HomeWork6
         /// <summary>
         /// проверка существования файла и предложение создать новый
         /// </summary>
-        static void WorkerList()
-        {
-            if (File.Exists(@"D:\WorkerList.txt"))
-            {
-                ReadWorker();
+        //static void WorkerList()
+        //{
+        //    if (File.Exists(@"D:\WorkerList.txt"))
+        //    {
+        //        ReadWorker();
                 
-            } else
-            {
-                Console.WriteLine("Файл не существует. Создать новый файл? д/н");
-                char key = Console.ReadKey(true).KeyChar;
-                if (char.ToLower(key) == 'д' || char.ToLower(key) == 'l') AddWorker();
-            }
-        }
+        //    } else
+        //    {
+        //        Console.WriteLine("Файл не существует. Создать новый файл? д/н");
+        //        char key = Console.ReadKey(true).KeyChar;
+        //        if (char.ToLower(key) == 'д' || char.ToLower(key) == 'l') AddWorker();
+        //    }
+        //}
         /// <summary>
         /// метод записи сотрудника в файл
         /// </summary>
         static void AddWorker()
         {
-            using (StreamWriter workerStream = new StreamWriter(@"D:\WorkerList.txt", true))
+            int id = Id();
+            using (StreamWriter workerStream = new StreamWriter(@"WorkerList.txt", true))
             {
                 char key = 'д';
-                int id = 0;
-
+                
                 do
                 {
                     Console.Clear();
@@ -107,7 +108,8 @@ namespace HomeWork6
         /// </summary>
         static void ReadWorker()
         {
-            using (StreamReader wlreader = new StreamReader(@"D:\WorkerList.txt"))
+            Console.Clear();
+            using (StreamReader wlreader = new StreamReader(@"WorkerList.txt"))
             {
                 string line;
                 while ((line = wlreader.ReadLine()) != null)
@@ -118,6 +120,34 @@ namespace HomeWork6
             }
             Console.WriteLine("\nНажмите любую кнопку чтобы вернуться в меню.");
             Console.ReadKey();
+        }
+        /// <summary>
+        /// метод поиска ID
+        /// </summary>
+        /// <returns></returns>
+        static int Id()
+        {
+            int id = 0;
+            using (StreamReader idreader = new StreamReader(@"WorkerList.txt"))
+            {
+                string line;
+                while ((line = idreader.ReadLine()) != null)
+                {
+                    id++;
+                }
+                return id;
+            }
+        }
+        /// <summary>
+        /// метод создания файла если он отсутствует
+        /// </summary>
+        static void FileFounder()
+        {
+            if (!File.Exists(@"WorkerList.txt"))
+            {
+                using (StreamWriter sw = new StreamWriter(@"WorkerList.txt"));
+            }
+                
         }
     }
 }
